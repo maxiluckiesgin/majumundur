@@ -19,12 +19,15 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register any authentication / authorization services.
      *
+     * @param Gate $gate
      * @return void
      */
     public function boot()
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('merchant', function ($user) {
+            return $user->role == 0;
+        });
     }
 }
