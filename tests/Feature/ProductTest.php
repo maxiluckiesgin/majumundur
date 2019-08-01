@@ -28,7 +28,7 @@ class ProductTest extends TestCase
         $response->assertStatus(401);
 
         //with login
-        $this->json('POST','/api/v1/login',$this->customer);
+        $this->json('POST', '/api/v1/login', $this->customer);
 
         $response = $this->getJson('/api/v1/product');
 
@@ -36,7 +36,8 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function postProductTest(){
+    public function postProductTest()
+    {
         $product = array(
             'name' => 'power bank',
             "price" => 9,
@@ -44,21 +45,21 @@ class ProductTest extends TestCase
         );
 
         //without login
-        $response = $this->postJson('/api/v1/product',$product);
+        $response = $this->postJson('/api/v1/product', $product);
 
         $response->assertStatus(401);
 
         //with customer login
-        $this->json('POST','/api/v1/login',$this->customer);
+        $this->json('POST', '/api/v1/login', $this->customer);
 
-        $response = $this->postJson('/api/v1/product',$product);
+        $response = $this->postJson('/api/v1/product', $product);
 
         $response->assertStatus(403);
 
         //with merchant login
-        $this->json('POST','/api/v1/login',$this->merchant);
+        $this->json('POST', '/api/v1/login', $this->merchant);
 
-        $response = $this->postJson('/api/v1/product',$product);
+        $response = $this->postJson('/api/v1/product', $product);
 
         $response->assertStatus(200);
 
@@ -67,6 +68,4 @@ class ProductTest extends TestCase
             'added' => $product
         ));
     }
-}
-    {
 }
