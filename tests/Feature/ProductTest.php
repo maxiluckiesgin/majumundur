@@ -61,11 +61,11 @@ class ProductTest extends TestCase
 
         $response = $this->postJson('/api/v1/product', $product);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
 
         $product['merchant'] = $this->merchant['username'];
-        $response->assertJson(array(
-            'added' => $product
-        ));
+        $response->assertJson($product);
     }
+
+
 }
