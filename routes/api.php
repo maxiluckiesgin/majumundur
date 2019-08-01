@@ -19,7 +19,7 @@ Route::prefix('v1')->group(function () {
         Route::put('/product/{id}', 'ProductController@update');
         Route::delete('/product/{id}', 'ProductController@destroy');
         Route::post('/buy/{id}', 'TransactionController@store');
-        Route::post('/buyerlist', 'TransactionController@buyerList');
+        Route::get('/buyerlist', 'TransactionController@buyerList');
     });
     Route::post('/register', 'AuthController@register');
     Route::post('/login', 'AuthController@login');
