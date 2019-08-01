@@ -22,6 +22,6 @@ Route::prefix('v1')->group(function () {
         Route::post('/buyerlist', 'TransactionController@buyerList');
     });
     Route::post('/register', 'AuthController@register');
-    Route::post('/login', 'ApiTokenController@login');
+    Route::post('/login', 'AuthController@login');
 });
 
