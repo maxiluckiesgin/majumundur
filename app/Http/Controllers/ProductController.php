@@ -21,7 +21,7 @@ class ProductController extends Controller
         $item->price = $request->price;
         $item->stock = $request->stock;
         $item->save();
-        return array('added' => $item);
+        return $item;
     }
 
 	 function update(Request $request, $id)
@@ -32,9 +32,9 @@ class ProductController extends Controller
              $item->price = $request->price;
              $item->stock = $request->stock;
              $item->save();
-             return array('updated' => $item);
+             return $item;
          }
-         return "You're not the owner of the product";
+         return abort(403,"You're not the owner of the product");
 
      }
 
@@ -46,6 +46,6 @@ class ProductController extends Controller
             Product::destroy($id);
             return 'deleted';
         }
-        return "You're not the owner of the product";
+        return abort(403,"You're not the owner of the product");
     }
 }

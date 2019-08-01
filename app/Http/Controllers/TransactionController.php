@@ -36,11 +36,9 @@ class TransactionController extends Controller
 
     public function buyerList(Request $request)
     {
-        $trans = Transaction::whereHas('product', function ($query) {
-            $query->where('user_id', Auth::user()->username);
+        return Transaction::whereHas('product', function ($query) {
+            $query->where('merchant', Auth::user()->username);
         })->get();
-
-        return $trans;
     }
 
     protected function getReward($id)
@@ -50,7 +48,9 @@ class TransactionController extends Controller
         //Reward A
         if ($id == 1) {
             return $this->tradePoint($user,20,'Reward A');
-        } else if ($id == 2){
+        }
+        //Reward B
+        else if ($id == 2){
             return $this->tradePoint($user,40,'Reward B');
         }
     }
