@@ -19,7 +19,6 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register any authentication / authorization services.
      *
-     * @param Gate $gate
      * @return void
      */
     public function boot()
@@ -28,6 +27,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('merchant', function ($user) {
             return $user->role == 0;
+        });
+
+        Gate::define('customer', function ($user) {
+            return $user->role == 1;
         });
     }
 }

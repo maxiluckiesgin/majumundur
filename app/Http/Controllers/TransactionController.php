@@ -18,14 +18,18 @@ class TransactionController extends Controller
         $trans = new Transaction;
         $trans->product = $id;
         $trans->customer = Auth::user()->username;
-        $trans->ammount = $request->ammount;
-        $product->stock = $product->stock - $trans->ammount;
-        $total = $trans->ammount * $product->price;
+        $trans->amount = $request->amount;
+        if($product->stock >= $trans->amount){
+            $product->stock = $product->stock - $trans->amount;
+        } else{
+            abort(400,"Product stock is less than amount requested");
+        }
+        $total = $trans->amount * $product->price;
         $user->point = $user->point + 1;
         $user->save();
         $trans->save();
         $product->save();
-        return array('success' => array('product' => $product->name, 'ammount' => $trans->ammount, 'total' => $total));
+        return array('success' => array('product' => $product->name, 'ammount' => $trans->amount, 'total' => $total));
 
 
     }
@@ -58,7 +62,7 @@ class TransactionController extends Controller
             $user->save();
             return $rewardName.' acquired';
         } else {
-            return "Your point is not enough, '.$rewardName.' need minimum of '.$pointNeeded.' point";
+            return abort(400, "Your point is not enough, $rewardName need minimum of $pointNeeded point");
         }
     }
 }

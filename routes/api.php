@@ -15,7 +15,10 @@ use Illuminate\Http\Request;
 Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::get('/product', 'ProductController@index');
-        Route::post('/buy/{id}', 'TransactionController@store');
+        Route::middleware('can:customer')->group(function () {
+            Route::post('/buy/{id}', 'TransactionController@store');
+            Route::get('/reward/{id}', 'TransactionController@getReward');
+        });
         Route::middleware('can:merchant')->group(function () {
             Route::post('/product', 'ProductController@store');
             Route::put('/product/{id}', 'ProductController@update');
